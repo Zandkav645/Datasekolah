@@ -3,98 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Sekolah dan Siswa</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Data Sekolah dan Siswa Indonesia</title>
     <style>
-        body {
-            background-color: #f8f9fa;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .header {
-            background: linear-gradient(135deg, #0066b2, #003f7a);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        
+        body {
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
         }
+        
+        .header {
+            background: linear-gradient(135deg, #1a5fb4, #3584e4);
+            color: white;
+            padding: 1.5rem 0;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
         .card {
+            background: white;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            border: none;
+            overflow: hidden;
         }
+        
         .card-header {
-            background-color: #0066b2;
+            background-color: #1a5fb4;
             color: white;
-            border-radius: 10px 10px 0 0 !important;
+            padding: 15px 20px;
             font-weight: bold;
+            font-size: 1.2rem;
         }
-        .btn-primary {
-            background-color: #0066b2;
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #1a5fb4;
+            color: white;
             border: none;
-            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+            transition: background-color 0.3s;
         }
-        .btn-primary:hover {
-            background-color: #0056a3;
+        
+        .btn:hover {
+            background-color: #0d4a8e;
         }
+        
         .btn-success {
-            background-color: #28a745;
-            border: none;
-            padding: 10px 20px;
+            background-color: #26a269;
         }
+        
         .btn-success:hover {
-            background-color: #218838;
+            background-color: #1d8645;
         }
+        
         .school-info {
             background-color: #e9f2f9;
             padding: 15px;
             border-radius: 5px;
             margin-bottom: 20px;
         }
+        
+        .school-info h4 {
+            margin-bottom: 15px;
+            color: #1a5fb4;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 0 10px;
+        }
+        
         .student-list {
             max-height: 400px;
             overflow-y: auto;
+            margin-top: 15px;
         }
+        
         .student-item {
             border-bottom: 1px solid #eee;
             padding: 10px;
             transition: background-color 0.2s;
         }
+        
         .student-item:hover {
             background-color: #f8f9fa;
         }
+        
         .loader {
             display: none;
             text-align: center;
             padding: 20px;
         }
-        .loader i {
-            font-size: 2rem;
-            color: #0066b2;
+        
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1a5fb4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
         }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         .footer {
             background-color: #343a40;
             color: white;
             padding: 1.5rem 0;
             margin-top: 2rem;
+            text-align: center;
         }
+        
         .search-container {
             position: relative;
         }
+        
         .search-icon {
             position: absolute;
             right: 15px;
-            top: 12px;
+            top: 42px;
             color: #6c757d;
+        }
+        
+        .province-filter, .level-filter {
+            margin-bottom: 15px;
+        }
+        
+        .school-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .badge-sd {
+            background-color: #c64600;
+            color: white;
+        }
+        
+        .badge-smp {
+            background-color: #0d7813;
+            color: white;
+        }
+        
+        .badge-sma {
+            background-color: #1a5fb4;
+            color: white;
+        }
+        
+        .school-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-right: 15px;
+            float: left;
+        }
+        
+        .school-header {
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .header {
+                padding: 1rem 0;
+            }
+            
+            .card-header {
+                padding: 12px 15px;
+            }
+            
+            .school-logo {
+                width: 60px;
+                height: 60px;
+                margin-right: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header text-center">
+    <div class="header">
         <div class="container">
-            <h1><i class="fas fa-school me-2"></i>Data Sekolah dan Siswa</h1>
-            <p class="lead">Temukan informasi sekolah dan daftar siswa dengan mudah</p>
+            <h1>Data Sekolah dan Siswa Indonesia</h1>
+            <p>Dari Sabang sampai Merauke - SD, SMP, dan SMA</p>
         </div>
     </div>
 
@@ -102,18 +254,63 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-search me-2"></i>Cari Sekolah
-                    </div>
+                    <div class="card-header">Cari Sekolah</div>
                     <div class="card-body">
-                        <div class="mb-3 search-container">
-                            <label for="schoolInput" class="form-label">Masukkan Nama atau Link Sekolah</label>
-                            <input type="text" class="form-control" id="schoolInput" placeholder="Contoh: SMA Negeri 1 Jakarta">
-                            <i class="fas fa-search search-icon"></i>
+                        <div class="form-group level-filter">
+                            <label for="levelSelect">Jenis Sekolah:</label>
+                            <select id="levelSelect">
+                                <option value="">Semua Jenis</option>
+                                <option value="SD">SD (Sekolah Dasar)</option>
+                                <option value="SMP">SMP (Sekolah Menengah Pertama)</option>
+                                <option value="SMA">SMA (Sekolah Menengah Atas)</option>
+                            </select>
                         </div>
-                        <button id="searchBtn" class="btn btn-primary w-100">
-                            <i class="fas fa-search me-2"></i>Cari Sekolah
-                        </button>
+                        <div class="form-group province-filter">
+                            <label for="provinceSelect">Provinsi:</label>
+                            <select id="provinceSelect">
+                                <option value="">Semua Provinsi</option>
+                                <option value="Aceh">Aceh</option>
+                                <option value="Sumatera Utara">Sumatera Utara</option>
+                                <option value="Sumatera Barat">Sumatera Barat</option>
+                                <option value="Riau">Riau</option>
+                                <option value="Jambi">Jambi</option>
+                                <option value="Sumatera Selatan">Sumatera Selatan</option>
+                                <option value="Bengkulu">Bengkulu</option>
+                                <option value="Lampung">Lampung</option>
+                                <option value="Bangka Belitung">Bangka Belitung</option>
+                                <option value="Kepulauan Riau">Kepulauan Riau</option>
+                                <option value="DKI Jakarta">DKI Jakarta</option>
+                                <option value="Jawa Barat">Jawa Barat</option>
+                                <option value="Jawa Tengah">Jawa Tengah</option>
+                                <option value="DI Yogyakarta">DI Yogyakarta</option>
+                                <option value="Jawa Timur">Jawa Timur</option>
+                                <option value="Banten">Banten</option>
+                                <option value="Bali">Bali</option>
+                                <option value="Nusa Tenggara Barat">Nusa Tenggara Barat</option>
+                                <option value="Nusa Tenggara Timur">Nusa Tenggara Timur</option>
+                                <option value="Kalimantan Barat">Kalimantan Barat</option>
+                                <option value="Kalimantan Tengah">Kalimantan Tengah</option>
+                                <option value="Kalimantan Selatan">Kalimantan Selatan</option>
+                                <option value="Kalimantan Timur">Kalimantan Timur</option>
+                                <option value="Kalimantan Utara">Kalimantan Utara</option>
+                                <option value="Sulawesi Utara">Sulawesi Utara</option>
+                                <option value="Sulawesi Tengah">Sulawesi Tengah</option>
+                                <option value="Sulawesi Selatan">Sulawesi Selatan</option>
+                                <option value="Sulawesi Tenggara">Sulawesi Tenggara</option>
+                                <option value="Gorontalo">Gorontalo</option>
+                                <option value="Sulawesi Barat">Sulawesi Barat</option>
+                                <option value="Maluku">Maluku</option>
+                                <option value="Maluku Utara">Maluku Utara</option>
+                                <option value="Papua Barat">Papua Barat</option>
+                                <option value="Papua">Papua</option>
+                            </select>
+                        </div>
+                        <div class="form-group search-container">
+                            <label for="schoolInput">Masukkan Nama Sekolah:</label>
+                            <input type="text" id="schoolInput" placeholder="Contoh: SD Negeri 1 Jakarta">
+                            <span class="search-icon">🔍</span>
+                        </div>
+                        <button id="searchBtn" class="btn">Cari Sekolah</button>
                     </div>
                 </div>
             </div>
@@ -122,45 +319,44 @@
         <div id="schoolResult" class="row justify-content-center" style="display: none;">
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-school me-2"></i>Informasi Sekolah
-                    </div>
+                    <div class="card-header">Informasi Sekolah</div>
                     <div class="card-body">
+                        <div class="school-header">
+                            <div id="schoolLogo" class="school-logo"></div>
+                            <h4 id="schoolName">SD Negeri 1 Jakarta <span id="schoolBadge" class="school-badge badge-sd">SD</span></h4>
+                        </div>
                         <div class="school-info">
-                            <h4 id="schoolName">SMA Negeri 1 Jakarta</h4>
-                            <div class="row mt-4">
+                            <div class="row">
                                 <div class="col-md-6">
-                                    <p><strong>Alamat:</strong> <span id="schoolAddress">Jl. Budi Utomo No.7, Ps. Baru, Kecamatan Sawah Besar, Kota Jakarta Pusat, DKI Jakarta 10710</span></p>
+                                    <p><strong>Alamat:</strong> <span id="schoolAddress">Jl. Budi Utomo No. 7, Jakarta Pusat</span></p>
                                     <p><strong>NPSN:</strong> <span id="schoolNPSN">20100123</span></p>
+                                    <p><strong>Jenjang:</strong> <span id="schoolLevel">SD</span></p>
                                 </div>
                                 <div class="col-md-6">
+                                    <p><strong>Provinsi:</strong> <span id="schoolProvince">DKI Jakarta</span></p>
                                     <p><strong>Status:</strong> <span id="schoolStatus">Negeri</span></p>
                                     <p><strong>Akreditasi:</strong> <span id="schoolAccreditation">A</span></p>
                                 </div>
                             </div>
                         </div>
-                        <button id="showStudentsBtn" class="btn btn-success w-100 mt-3">
-                            <i class="fas fa-users me-2"></i>CEK NAMA SISWA
-                        </button>
+                        <button id="showStudentsBtn" class="btn btn-success">CEK NAMA SISWA</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="loader" id="loader">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p class="mt-2">Memuat data...</p>
+            <div class="loader-spinner"></div>
+            <p>Memuat data...</p>
         </div>
 
         <div id="studentsResult" class="row justify-content-center" style="display: none;">
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-users me-2"></i>Daftar Siswa
-                    </div>
+                    <div class="card-header">Daftar Siswa</div>
                     <div class="card-body">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" id="studentSearch" placeholder="Cari nama siswa...">
+                        <div class="form-group">
+                            <input type="text" id="studentSearch" placeholder="Cari nama siswa...">
                         </div>
                         <div class="student-list" id="studentList">
                             <!-- Daftar siswa akan dimuat di sini -->
@@ -171,13 +367,314 @@
         </div>
     </div>
 
-    <div class="footer text-center mt-4">
+    <div class="footer">
         <div class="container">
-            <p>&copy; 2023 Data Sekolah dan Siswa. All rights reserved.</p>
+            <p>&copy; 2023 Data Sekolah dan Siswa Indonesia. All rights reserved.</p>
         </div>
     </div>
 
     <script>
+        // Data sekolah dari seluruh Indonesia (SD, SMP, SMA)
+        const schoolData = [
+            // SD
+            {
+                name: "SD Negeri 1 Sabang",
+                address: "Jl. Pendidikan No. 1, Sabang, Aceh",
+                npsn: "10107101",
+                province: "Aceh",
+                level: "SD",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SD Negeri 1 Banda Aceh",
+                address: "Jl. Tgk. H. Mohd. Daud Beureueh No. 22, Banda Aceh",
+                npsn: "10107102",
+                province: "Aceh",
+                level: "SD",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SD Negeri 1 Medan",
+                address: "Jl. Teuku Cik Ditiro No. 1, Medan, Sumatera Utara",
+                npsn: "10210101",
+                province: "Sumatera Utara",
+                level: "SD",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SD Negeri 1 Jakarta",
+                address: "Jl. Budi Utomo No. 7, Jakarta Pusat",
+                npsn: "20100123",
+                province: "DKI Jakarta",
+                level: "SD",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SD Negeri 1 Bandung",
+                address: "Jl. Belitung No. 8, Bandung, Jawa Barat",
+                npsn: "20219201",
+                province: "Jawa Barat",
+                level: "SD",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SD Negeri 1 Yogyakarta",
+                address: "Jl. Malioboro No. 1, Yogyakarta",
+                npsn: "20404101",
+                province: "DI Yogyakarta",
+                level: "SD",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SD Negeri 1 Denpasar",
+                address: "Jl. Gatot Subroto No. 1, Denpasar, Bali",
+                npsn: "50102101",
+                province: "Bali",
+                level: "SD",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SD Negeri 1 Makassar",
+                address: "Jl. Sultan Hasanuddin No. 1, Makassar, Sulawesi Selatan",
+                npsn: "40304101",
+                province: "Sulawesi Selatan",
+                level: "SD",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SD Negeri 1 Jayapura",
+                address: "Jl. Koti No. 1, Jayapura, Papua",
+                npsn: "70201101",
+                province: "Papua",
+                level: "SD",
+                status: "Negeri",
+                accreditation: "A"
+            },
+
+            // SMP
+            {
+                name: "SMP Negeri 1 Sabang",
+                address: "Jl. Pendidikan No. 2, Sabang, Aceh",
+                npsn: "10107111",
+                province: "Aceh",
+                level: "SMP",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMP Negeri 1 Banda Aceh",
+                address: "Jl. Tgk. H. Mohd. Daud Beureueh No. 23, Banda Aceh",
+                npsn: "10107112",
+                province: "Aceh",
+                level: "SMP",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMP Negeri 1 Medan",
+                address: "Jl. Teuku Cik Ditiro No. 2, Medan, Sumatera Utara",
+                npsn: "10210111",
+                province: "Sumatera Utara",
+                level: "SMP",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMP Negeri 1 Jakarta",
+                address: "Jl. Budi Utomo No. 8, Jakarta Pusat",
+                npsn: "20100133",
+                province: "DKI Jakarta",
+                level: "SMP",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMP Negeri 1 Bandung",
+                address: "Jl. Belitung No. 9, Bandung, Jawa Barat",
+                npsn: "20219211",
+                province: "Jawa Barat",
+                level: "SMP",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMP Negeri 1 Yogyakarta",
+                address: "Jl. Malioboro No. 2, Yogyakarta",
+                npsn: "20404111",
+                province: "DI Yogyakarta",
+                level: "SMP",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMP Negeri 1 Denpasar",
+                address: "Jl. Gatot Subroto No. 2, Denpasar, Bali",
+                npsn: "50102111",
+                province: "Bali",
+                level: "SMP",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMP Negeri 1 Makassar",
+                address: "Jl. Sultan Hasanuddin No. 2, Makassar, Sulawesi Selatan",
+                npsn: "40304111",
+                province: "Sulawesi Selatan",
+                level: "SMP",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMP Negeri 1 Jayapura",
+                address: "Jl. Koti No. 2, Jayapura, Papua",
+                npsn: "70201111",
+                province: "Papua",
+                level: "SMP",
+                status: "Negeri",
+                accreditation: "A"
+            },
+
+            // SMA
+            {
+                name: "SMA Negeri 1 Sabang",
+                address: "Jl. Pendidikan No. 3, Sabang, Aceh",
+                npsn: "10107121",
+                province: "Aceh",
+                level: "SMA",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMA Negeri 1 Banda Aceh",
+                address: "Jl. Tgk. H. Mohd. Daud Beureueh No. 24, Banda Aceh",
+                npsn: "10107122",
+                province: "Aceh",
+                level: "SMA",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMA Negeri 1 Medan",
+                address: "Jl. Teuku Cik Ditiro No. 3, Medan, Sumatera Utara",
+                npsn: "10210121",
+                province: "Sumatera Utara",
+                level: "SMA",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMA Negeri 1 Jakarta",
+                address: "Jl. Budi Utomo No. 9, Jakarta Pusat",
+                npsn: "20100143",
+                province: "DKI Jakarta",
+                level: "SMA",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMA Negeri 1 Bandung",
+                address: "Jl. Belitung No. 10, Bandung, Jawa Barat",
+                npsn: "20219221",
+                province: "Jawa Barat",
+                level: "SMA",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMA Negeri 1 Yogyakarta",
+                address: "Jl. Malioboro No. 3, Yogyakarta",
+                npsn: "20404121",
+                province: "DI Yogyakarta",
+                level: "SMA",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMA Negeri 1 Denpasar",
+                address: "Jl. Gatot Subroto No. 3, Denpasar, Bali",
+                npsn: "50102121",
+                province: "Bali",
+                level: "SMA",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMA Negeri 1 Makassar",
+                address: "Jl. Sultan Hasanuddin No. 3, Makassar, Sulawesi Selatan",
+                npsn: "40304121",
+                province: "Sulawesi Selatan",
+                level: "SMA",
+                status: "Negeri",
+                accreditation: "A"
+            },
+            {
+                name: "SMA Negeri 1 Jayapura",
+                address: "Jl. Koti No. 3, Jayapura, Papua",
+                npsn: "70201121",
+                province: "Papua",
+                level: "SMA",
+                status: "Negeri",
+                accreditation: "A"
+            }
+        ];
+
+        // Data siswa dari seluruh Indonesia
+        const studentsData = {
+            "SD Negeri 1 Sabang": [
+                "Ahmad Fauzi", "Siti Rahma", "Muhammad Iqbal", "Nurul Hikmah", "Rizki Pratama",
+                "Dewi Lestari", "Abdul Rahman", "Fitriani", "Irfan Maulana", "Salsabila",
+                "Rudi Hartono", "Maya Sari", "Fajar Siddik", "Nova Amelia", "Hendra Gunawan"
+            ],
+            "SD Negeri 1 Jakarta": [
+                "Budi Santoso", "Siska Wulandari", "Joko Widodo", "Dewi Anggraini", "Ahmad Dahlan",
+                "Maya Sari", "Rudi Hartono", "Fitriani", "Irfan Maulana", "Salsabila",
+                "Rizki Pratama", "Nurul Hikmah", "Muhammad Iqbal", "Siti Rahma", "Ahmad Fauzi"
+            ],
+            "SD Negeri 1 Denpasar": [
+                "Putu Wijaya", "Kadek Sari", "Made Aditya", "Ni Luh Putu", "Wayan Sutawan",
+                "Komang Sri", "Ketut Ari", "Nyoman Darma", "Made Sudarma", "Putu Astuti",
+                "Kadek Wira", "Ni Made Sri", "Wayan Artawan", "Komang Yuda", "Ketut Widi"
+            ],
+            "SMP Negeri 1 Sabang": [
+                "Teuku Ryan", "Cut Nadia", "Faisal Akbar", "Rahmi Utami", "Reza Pratama",
+                "Intan Permata", "Syahrul Ramadhan", "Dina Safitri", "Ahmad Yani", "Lia Amelia",
+                "Rizky Ananda", "Sari Indah", "M. Rizki", "Nur Aisyah", "Dedi Kusuma"
+            ],
+            "SMP Negeri 1 Jakarta": [
+                "Ahmad Rizki", "Budi Santoso", "Citra Lestari", "Dewi Anggraini", "Eko Prasetyo",
+                "Fitri Handayani", "Gunawan Wibisono", "Hana Safitri", "Irfan Maulana", "Jihan Putri",
+                "Kurniawan Adi", "Lia Amelia", "M. Fajar Nugroho", "Nina Septiani", "Oki Setiawan"
+            ],
+            "SMP Negeri 1 Denpasar": [
+                "Putu Wijaya", "Kadek Sari", "Made Aditya", "Ni Luh Putu", "Wayan Sutawan",
+                "Komang Sri", "Ketut Ari", "Nyoman Darma", "Made Sudarma", "Putu Astuti",
+                "Kadek Wira", "Ni Made Sri", "Wayan Artawan", "Komang Yuda", "Ketut Widi"
+            ],
+            "SMA Negeri 1 Sabang": [
+                "Ahmad Fauzi", "Siti Rahma", "Muhammad Iqbal", "Nurul Hikmah", "Rizki Pratama",
+                "Dewi Lestari", "Abdul Rahman", "Fitriani", "Irfan Maulana", "Salsabila",
+                "Rudi Hartono", "Maya Sari", "Fajar Siddik", "Nova Amelia", "Hendra Gunawan"
+            ],
+            "SMA Negeri 1 Jakarta": [
+                "Ahmad Rizki", "Budi Santoso", "Citra Lestari", "Dewi Anggraini", "Eko Prasetyo",
+                "Fitri Handayani", "Gunawan Wibisono", "Hana Safitri", "Irfan Maulana", "Jihan Putri",
+                "Kurniawan Adi", "Lia Amelia", "M. Fajar Nugroho", "Nina Septiani", "Oki Setiawan"
+            ],
+            "SMA Negeri 1 Denpasar": [
+                "Putu Wijaya", "Kadek Sari", "Made Aditya", "Ni Luh Putu", "Wayan Sutawan",
+                "Komang Sri", "Ketut Ari", "Nyoman Darma", "Made Sudarma", "Putu Astuti",
+                "Kadek Wira", "Ni Made Sri", "Wayan Artawan", "Komang Yuda", "Ketut Widi"
+            ]
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             const schoolInput = document.getElementById('schoolInput');
             const searchBtn = document.getElementById('searchBtn');
@@ -187,86 +684,28 @@
             const studentList = document.getElementById('studentList');
             const studentSearch = document.getElementById('studentSearch');
             const loader = document.getElementById('loader');
+            const provinceSelect = document.getElementById('provinceSelect');
+            const levelSelect = document.getElementById('levelSelect');
             
-            // Data sekolah contoh (dalam aplikasi nyata, data ini akan berasal dari database/API)
-            const schoolData = {
-                "SMA Negeri 1 Jakarta": {
-                    name: "SMA Negeri 1 Jakarta",
-                    address: "Jl. Budi Utomo No.7, Ps. Baru, Kecamatan Sawah Besar, Kota Jakarta Pusat, DKI Jakarta 10710",
-                    npsn: "20100123",
-                    status: "Negeri",
-                    accreditation: "A"
-                },
-                "SMA Negeri 3 Bandung": {
-                    name: "SMA Negeri 3 Bandung",
-                    address: "Jl. Belitung No.8, Merdeka, Kec. Sumur Bandung, Kota Bandung, Jawa Barat 40113",
-                    npsn: "20219201",
-                    status: "Negeri",
-                    accreditation: "A"
-                },
-                "SMA Negeri 8 Jakarta": {
-                    name: "SMA Negeri 8 Jakarta",
-                    address: "Jl. Taman Bukit Duri No.1, Tebet, Kota Jakarta Selatan, DKI Jakarta 12840",
-                    npsn: "20100145",
-                    status: "Negeri",
-                    accreditation: "A"
+            // Filter sekolah berdasarkan provinsi dan jenjang
+            function updateSchoolSuggestions() {
+                const province = provinceSelect.value;
+                const level = levelSelect.value;
+                
+                if (province || level) {
+                    const filteredSchools = schoolData.filter(school => {
+                        return (!province || school.province === province) && 
+                               (!level || school.level === level);
+                    });
+                    
+                    if (filteredSchools.length > 0) {
+                        schoolInput.value = filteredSchools[0].name;
+                    }
                 }
-            };
+            }
             
-            // Data siswa contoh
-            const studentsData = {
-                "SMA Negeri 1 Jakarta": [
-                    "Ahmad Rizki",
-                    "Budi Santoso",
-                    "Citra Lestari",
-                    "Dewi Anggraini",
-                    "Eko Prasetyo",
-                    "Fitri Handayani",
-                    "Gunawan Wibisono",
-                    "Hana Safitri",
-                    "Irfan Maulana",
-                    "Jihan Putri",
-                    "Kurniawan Adi",
-                    "Lia Amelia",
-                    "M. Fajar Nugroho",
-                    "Nina Septiani",
-                    "Oki Setiawan"
-                ],
-                "SMA Negeri 3 Bandung": [
-                    "Ade Sutisna",
-                    "Bayu Kurniawan",
-                    "Cindy Febrianti",
-                    "Dedi Hermawan",
-                    "Eva Marlina",
-                    "Fahmi Ibrahim",
-                    "Gita Wulandari",
-                    "Hendra Kurnia",
-                    "Indah Permatasari",
-                    "Jajang Surahman",
-                    "Kiki Amelia",
-                    "Luki Lukman",
-                    "Melly Susanti",
-                    "Nando Pratama",
-                    "Oman Yusuf"
-                ],
-                "SMA Negeri 8 Jakarta": [
-                    "Agus Salim",
-                    "Bella Nurul",
-                    "Cakra Wijaya",
-                    "Diana Putri",
-                    "Eka Suryadi",
-                    "Fanny Safira",
-                    "Gilang Ramadhan",
-                    "Hesti Rahayu",
-                    "Ivan Maulana",
-                    "Joko Susilo",
-                    "Kartika Sari",
-                    "Luthfi Hasan",
-                    "Maya Wulandari",
-                    "Nazaruddin",
-                    "Opik Taufik"
-                ]
-            };
+            provinceSelect.addEventListener('change', updateSchoolSuggestions);
+            levelSelect.addEventListener('change', updateSchoolSuggestions);
             
             // Fungsi untuk mencari sekolah
             searchBtn.addEventListener('click', function() {
@@ -282,25 +721,26 @@
                 schoolResult.style.display = 'none';
                 studentsResult.style.display = 'none';
                 
-                // Simulasi pencarian data (dalam aplikasi nyata, ini akan berupa request ke API)
+                // Simulasi pencarian data
                 setTimeout(function() {
-                    let found = false;
+                    let foundSchool = null;
                     
-                    for (const school in schoolData) {
-                        if (school.toLowerCase().includes(query.toLowerCase())) {
-                            displaySchoolInfo(schoolData[school]);
-                            found = true;
+                    for (const school of schoolData) {
+                        if (school.name.toLowerCase().includes(query.toLowerCase())) {
+                            foundSchool = school;
                             break;
                         }
                     }
                     
-                    if (!found) {
+                    if (foundSchool) {
+                        displaySchoolInfo(foundSchool);
+                    } else {
                         alert('Sekolah tidak ditemukan. Silakan coba dengan nama sekolah lainnya.');
                     }
                     
                     // Sembunyikan loader
                     loader.style.display = 'none';
-                }, 1500);
+                }, 800);
             });
             
             // Fungsi untuk menampilkan informasi sekolah
@@ -308,8 +748,32 @@
                 document.getElementById('schoolName').textContent = school.name;
                 document.getElementById('schoolAddress').textContent = school.address;
                 document.getElementById('schoolNPSN').textContent = school.npsn;
+                document.getElementById('schoolProvince').textContent = school.province;
+                document.getElementById('schoolLevel').textContent = school.level;
                 document.getElementById('schoolStatus').textContent = school.status;
                 document.getElementById('schoolAccreditation').textContent = school.accreditation;
+                
+                // Set badge berdasarkan jenjang sekolah
+                const badge = document.getElementById('schoolBadge');
+                badge.className = 'school-badge ';
+                if (school.level === 'SD') {
+                    badge.classList.add('badge-sd');
+                    badge.textContent = 'SD';
+                } else if (school.level === 'SMP') {
+                    badge.classList.add('badge-smp');
+                    badge.textContent = 'SMP';
+                } else if (school.level === 'SMA') {
+                    badge.classList.add('badge-sma');
+                    badge.textContent = 'SMA';
+                }
+                
+                // Set logo sekolah (simulasi)
+                const logo = document.getElementById('schoolLogo');
+                logo.textContent = '';
+                logo.style.backgroundImage = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect x=\"20\" y=\"20\" width=\"60\" height=\"60\" fill=\"%231a5fb4\" rx=\"10\"/><text x=\"50\" y=\"55\" font-family=\"Arial\" font-size=\"20\" fill=\"white\" text-anchor=\"middle\">" + school.level + "</text></svg>')";
+                logo.style.backgroundRepeat = 'no-repeat';
+                logo.style.backgroundPosition = 'center';
+                logo.style.backgroundSize = 'contain';
                 
                 schoolResult.style.display = 'block';
                 studentsResult.style.display = 'none';
@@ -325,30 +789,29 @@
                 // Tampilkan loader
                 loader.style.display = 'block';
                 
-                // Simulasi pengambilan data siswa (dalam aplikasi nyata, ini akan berupa request ke API)
+                // Simulasi pengambilan data siswa
                 setTimeout(function() {
-                    const students = studentsData[schoolName] || [];
+                    const students = studentsData[schoolName] || [
+                        "Data siswa sedang tidak tersedia", 
+                        "Silakan hubungi administrator sekolah"
+                    ];
                     
                     // Kosongkan daftar siswa sebelumnya
                     studentList.innerHTML = '';
                     
-                    if (students.length === 0) {
-                        studentList.innerHTML = '<p class="text-center">Data siswa tidak ditemukan.</p>';
-                    } else {
-                        students.forEach(student => {
-                            const studentItem = document.createElement('div');
-                            studentItem.className = 'student-item';
-                            studentItem.textContent = student;
-                            studentList.appendChild(studentItem);
-                        });
-                    }
+                    students.forEach(student => {
+                        const studentItem = document.createElement('div');
+                        studentItem.className = 'student-item';
+                        studentItem.textContent = student;
+                        studentList.appendChild(studentItem);
+                    });
                     
                     studentsResult.style.display = 'block';
                     loader.style.display = 'none';
                     
                     // Scroll ke daftar siswa
                     studentsResult.scrollIntoView({ behavior: 'smooth' });
-                }, 1500);
+                }, 800);
             });
             
             // Fungsi untuk mencari siswa
