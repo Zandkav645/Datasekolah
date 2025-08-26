@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sekolah dan Siswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header {
+            background: linear-gradient(135deg, #0066b2, #003f7a);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+        .card-header {
+            background-color: #0066b2;
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #0066b2;
+            border: none;
+            padding: 10px 20px;
+        }
+        .btn-primary:hover {
+            background-color: #0056a3;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            padding: 10px 20px;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .school-info {
+            background-color: #e9f2f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .student-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .student-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px;
+            transition: background-color 0.2s;
+        }
+        .student-item:hover {
+            background-color: #f8f9fa;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .loader i {
+            font-size: 2rem;
+            color: #0066b2;
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        .search-container {
+            position: relative;
+        }
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="header text-center">
+        <div class="container">
+            <h1><i class="fas fa-school me-2"></i>Data Sekolah dan Siswa</h1>
+            <p class="lead">Temukan informasi sekolah dan daftar siswa dengan mudah</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-search me-2"></i>Cari Sekolah
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3 search-container">
+                            <label for="schoolInput" class="form-label">Masukkan Nama atau Link Sekolah</label>
+                            <input type="text" class="form-control" id="schoolInput" placeholder="Contoh: SMA Negeri 1 Jakarta">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                        <button id="searchBtn" class="btn btn-primary w-100">
+                            <i class="fas fa-search me-2"></i>Cari Sekolah
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="schoolResult" class="row justify-content-center" style="display: none;">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-school me-2"></i>Informasi Sekolah
+                    </div>
+                    <div class="card-body">
+                        <div class="school-info">
+                            <h4 id="schoolName">SMA Negeri 1 Jakarta</h4>
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <p><strong>Alamat:</strong> <span id="schoolAddress">Jl. Budi Utomo No.7, Ps. Baru, Kecamatan Sawah Besar, Kota Jakarta Pusat, DKI Jakarta 10710</span></p>
+                                    <p><strong>NPSN:</strong> <span id="schoolNPSN">20100123</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Status:</strong> <span id="schoolStatus">Negeri</span></p>
+                                    <p><strong>Akreditasi:</strong> <span id="schoolAccreditation">A</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="showStudentsBtn" class="btn btn-success w-100 mt-3">
+                            <i class="fas fa-users me-2"></i>CEK NAMA SISWA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loader" id="loader">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p class="mt-2">Memuat data...</p>
+        </div>
+
+        <div id="studentsResult" class="row justify-content-center" style="display: none;">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-users me-2"></i>Daftar Siswa
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="studentSearch" placeholder="Cari nama siswa...">
+                        </div>
+                        <div class="student-list" id="studentList">
+                            <!-- Daftar siswa akan dimuat di sini -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer text-center mt-4">
+        <div class="container">
+            <p>&copy; 2023 Data Sekolah dan Siswa. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const schoolInput = document.getElementById('schoolInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const schoolResult = document.getElementById('schoolResult');
+            const showStudentsBtn = document.getElementById('showStudentsBtn');
+            const studentsResult = document.getElementById('studentsResult');
+            const studentList = document.getElementById('studentList');
+            const studentSearch = document.getElementById('studentSearch');
+            const loader = document.getElementById('loader');
+            
+            // Data sekolah contoh (dalam aplikasi nyata, data ini akan berasal dari database/API)
+            const schoolData = {
+                "SMA Negeri 1 Jakarta": {
+                    name: "SMA Negeri 1 Jakarta",
+                    address: "Jl. Budi Utomo No.7, Ps. Baru, Kecamatan Sawah Besar, Kota Jakarta Pusat, DKI Jakarta 10710",
+                    npsn: "20100123",
+                    status: "Negeri",
+                    accreditation: "A"
+                },
+                "SMA Negeri 3 Bandung": {
+                    name: "SMA Negeri 3 Bandung",
+                    address: "Jl. Belitung No.8, Merdeka, Kec. Sumur Bandung, Kota Bandung, Jawa Barat 40113",
+                    npsn: "20219201",
+                    status: "Negeri",
+                    accreditation: "A"
+                },
+                "SMA Negeri 8 Jakarta": {
+                    name: "SMA Negeri 8 Jakarta",
+                    address: "Jl. Taman Bukit Duri No.1, Tebet, Kota Jakarta Selatan, DKI Jakarta 12840",
+                    npsn: "20100145",
+                    status: "Negeri",
+                    accreditation: "A"
+                }
+            };
+            
+            // Data siswa contoh
+            const studentsData = {
+                "SMA Negeri 1 Jakarta": [
+                    "Ahmad Rizki",
+                    "Budi Santoso",
+                    "Citra Lestari",
+                    "Dewi Anggraini",
+                    "Eko Prasetyo",
+                    "Fitri Handayani",
+                    "Gunawan Wibisono",
+                    "Hana Safitri",
+                    "Irfan Maulana",
+                    "Jihan Putri",
+                    "Kurniawan Adi",
+                    "Lia Amelia",
+                    "M. Fajar Nugroho",
+                    "Nina Septiani",
+                    "Oki Setiawan"
+                ],
+                "SMA Negeri 3 Bandung": [
+                    "Ade Sutisna",
+                    "Bayu Kurniawan",
+                    "Cindy Febrianti",
+                    "Dedi Hermawan",
+                    "Eva Marlina",
+                    "Fahmi Ibrahim",
+                    "Gita Wulandari",
+                    "Hendra Kurnia",
+                    "Indah Permatasari",
+                    "Jajang Surahman",
+                    "Kiki Amelia",
+                    "Luki Lukman",
+                    "Melly Susanti",
+                    "Nando Pratama",
+                    "Oman Yusuf"
+                ],
+                "SMA Negeri 8 Jakarta": [
+                    "Agus Salim",
+                    "Bella Nurul",
+                    "Cakra Wijaya",
+                    "Diana Putri",
+                    "Eka Suryadi",
+                    "Fanny Safira",
+                    "Gilang Ramadhan",
+                    "Hesti Rahayu",
+                    "Ivan Maulana",
+                    "Joko Susilo",
+                    "Kartika Sari",
+                    "Luthfi Hasan",
+                    "Maya Wulandari",
+                    "Nazaruddin",
+                    "Opik Taufik"
+                ]
+            };
+            
+            // Fungsi untuk mencari sekolah
+            searchBtn.addEventListener('click', function() {
+                const query = schoolInput.value.trim();
+                
+                if (query === '') {
+                    alert('Silakan masukkan nama sekolah terlebih dahulu!');
+                    return;
+                }
+                
+                // Tampilkan loader
+                loader.style.display = 'block';
+                schoolResult.style.display = 'none';
+                studentsResult.style.display = 'none';
+                
+                // Simulasi pencarian data (dalam aplikasi nyata, ini akan berupa request ke API)
+                setTimeout(function() {
+                    let found = false;
+                    
+                    for (const school in schoolData) {
+                        if (school.toLowerCase().includes(query.toLowerCase())) {
+                            displaySchoolInfo(schoolData[school]);
+                            found = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!found) {
+                        alert('Sekolah tidak ditemukan. Silakan coba dengan nama sekolah lainnya.');
+                    }
+                    
+                    // Sembunyikan loader
+                    loader.style.display = 'none';
+                }, 1500);
+            });
+            
+            // Fungsi untuk menampilkan informasi sekolah
+            function displaySchoolInfo(school) {
+                document.getElementById('schoolName').textContent = school.name;
+                document.getElementById('schoolAddress').textContent = school.address;
+                document.getElementById('schoolNPSN').textContent = school.npsn;
+                document.getElementById('schoolStatus').textContent = school.status;
+                document.getElementById('schoolAccreditation').textContent = school.accreditation;
+                
+                schoolResult.style.display = 'block';
+                studentsResult.style.display = 'none';
+                
+                // Scroll ke hasil pencarian
+                schoolResult.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Fungsi untuk menampilkan daftar siswa
+            showStudentsBtn.addEventListener('click', function() {
+                const schoolName = document.getElementById('schoolName').textContent;
+                
+                // Tampilkan loader
+                loader.style.display = 'block';
+                
+                // Simulasi pengambilan data siswa (dalam aplikasi nyata, ini akan berupa request ke API)
+                setTimeout(function() {
+                    const students = studentsData[schoolName] || [];
+                    
+                    // Kosongkan daftar siswa sebelumnya
+                    studentList.innerHTML = '';
+                    
+                    if (students.length === 0) {
+                        studentList.innerHTML = '<p class="text-center">Data siswa tidak ditemukan.</p>';
+                    } else {
+                        students.forEach(student => {
+                            const studentItem = document.createElement('div');
+                            studentItem.className = 'student-item';
+                            studentItem.textContent = student;
+                            studentList.appendChild(studentItem);
+                        });
+                    }
+                    
+                    studentsResult.style.display = 'block';
+                    loader.style.display = 'none';
+                    
+                    // Scroll ke daftar siswa
+                    studentsResult.scrollIntoView({ behavior: 'smooth' });
+                }, 1500);
+            });
+            
+            // Fungsi untuk mencari siswa
+            studentSearch.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                const students = studentList.getElementsByClassName('student-item');
+                
+                Array.from(students).forEach(student => {
+                    const name = student.textContent.toLowerCase();
+                    if (name.includes(query)) {
+                        student.style.display = 'block';
+                    } else {
+                        student.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Memungkinkan pencarian dengan menekan Enter
+            schoolInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchBtn.click();
+                }
+            });
+            
+            studentSearch.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    this.blur();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
